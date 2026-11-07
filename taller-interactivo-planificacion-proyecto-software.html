@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Taller interactivo | Planificación de proyectos de software</title>
+<style>
+:root{--n:#12304f;--b:#176b9a;--g:#d6a638;--bg:#f3f6f9;--ink:#26384a;--line:#dce4eb}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Arial,sans-serif}
+header{background:var(--n);color:white;padding:16px 22px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+button{border:0;border-radius:8px;padding:10px 14px;background:var(--g);font-weight:bold;cursor:pointer;color:#172b3d}.secondary{background:#eaf3f8}
+.wrap{max-width:1250px;margin:auto;padding:20px;display:grid;grid-template-columns:235px 1fr;gap:18px}
+aside,.panel{background:white;border:1px solid var(--line);border-radius:13px;padding:17px}aside{position:sticky;top:12px;align-self:start}
+aside a{display:block;padding:6px 8px;text-decoration:none;color:var(--n);font-size:14px;border-radius:6px}aside a:hover{background:#eaf3f8}
+.hero{background:linear-gradient(120deg,#12304f,#1d638b);color:white;padding:28px;border-radius:15px;margin-bottom:15px}.hero h1{font-size:32px;line-height:1.2;margin:5px 0}
+.panel{margin-bottom:15px;scroll-margin-top:15px}.eyebrow{font-size:12px;color:#23834d;font-weight:bold;letter-spacing:1.4px;text-transform:uppercase}
+h2{color:var(--n);margin:5px 0 12px}h3{color:var(--b)}label{display:block;font-weight:bold;margin:9px 0 4px}
+input,textarea,select{width:100%;padding:9px;border:1px solid #bdcbd6;border-radius:7px;font:inherit}textarea{min-height:78px;resize:vertical}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.task{border:1px solid var(--line);padding:12px;border-radius:9px;margin:10px 0}.call{background:#fbf5e7;border-left:4px solid var(--g);padding:12px 15px;border-radius:0 8px 8px 0;margin:12px 0}
+.muted{font-size:14px;color:#607487}.check{display:flex;gap:8px;align-items:flex-start;margin:8px 0}.check input{width:auto;margin-top:5px}
+table{border-collapse:collapse;width:100%;margin:12px 0;font-size:14px}td,th{border:1px solid var(--line);padding:7px}th{background:var(--n);color:white}
+.progress{height:8px;background:#e5edf2;border-radius:8px;overflow:hidden}.progress span{display:block;height:100%;width:0;background:#23834d}
+.feedback{padding:10px;border-radius:8px;margin-top:9px}.good{background:#e8f5ec;color:#175d34}.bad{background:#fae9e9;color:#84242b}
+.quizq{border:1px solid var(--line);border-radius:9px;padding:12px;margin:10px 0}.quizq label{font-weight:normal}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.score{font-size:20px;font-weight:bold;color:var(--n)}
+footer{text-align:center;color:#6a7b8b;padding:22px;font-size:13px}
+@media(max-width:820px){.wrap{display:block;padding:10px}aside{position:static;margin-bottom:12px}.grid,.grid3{grid-template-columns:1fr}.hero h1{font-size:26px}}
+@media print{header,aside,.actions,.progress{display:none!important}.wrap{display:block;padding:0}.panel{break-inside:avoid}.hero{background:var(--n)!important;color:white!important;print-color-adjust:exact}}
+</style></head><body>
+<header><div><b>UNIVERSIDAD POPULAR DEL CESAR</b><br><small>Ingeniería de Sistemas · Especialización en Ingeniería de Software</small><br><b>TALLER PRÁCTICO INTERACTIVO</b></div><button onclick="print()">Imprimir / Guardar PDF</button></header>
+<div class="wrap"><aside><b>RUTA DEL TALLER</b>
+<a href="#orienta">0. Orientaciones</a><a href="#caso">1. Caso integrador</a><a href="#alcance">2. Alcance</a><a href="#req">3. Requisitos</a><a href="#arq">4. Arquitectura</a><a href="#edt">5. EDT/WBS</a><a href="#pert">6. Estimaciones</a><a href="#plan">7. Cronograma y costos</a><a href="#raci">8. Responsabilidades</a><a href="#calidad">9. Calidad y seguridad</a><a href="#riesgos">10. Riesgos y cambios</a><a href="#integracion">11. Integración</a><a href="#quiz">12. Cuestionario</a><a href="#entrega">13. Entrega</a>
+<hr><b>Avance</b><div class="progress"><span id="bar"></span></div><small id="pct">0 %</small></aside>
+<main>
+<div class="hero"><div style="color:#f2cf78;font-weight:bold">GESTIÓN DE PROYECTOS DE SOFTWARE · ACTIVIDAD APLICADA</div><h1>Planificación de un proyecto de software</h1><p>Desarrolle los componentes esenciales de un plan de proyecto. Analice el caso, tome decisiones justificadas, diligencie las fichas y compruebe sus conocimientos.</p><b>Modalidad:</b> equipos de 3 a 5 estudiantes · <b>Producto:</b> expediente básico de planificación.</div>
+
+<section class="panel" id="orienta"><div class="eyebrow">Antes de comenzar</div><h2>Orientaciones y datos del equipo</h2>
+<div class="call"><b>Propósito:</b> convertir una necesidad organizacional en una ruta verificable, articulando alcance, requisitos, arquitectura, EDT, estimaciones, cronograma, costos, responsabilidades, calidad, seguridad, comunicaciones y riesgos.</div>
+<div class="grid"><div><label>Equipo</label><input id="team" placeholder="Nombre del equipo"></div><div><label>Integrantes</label><input id="members" placeholder="Nombres completos"></div><div><label>Proyecto</label><input id="project" placeholder="Nombre provisional"></div><div><label>Organización</label><input id="org" placeholder="Institución o empresa"></div></div>
+<p class="muted">Expliciten supuestos, diferencien datos reales de valores hipotéticos y mantengan coherencia entre las secciones.</p><div class="check"><input type="checkbox" class="done"> Leímos las orientaciones y registramos el equipo.</div></section>
+
+<section class="panel" id="caso"><div class="eyebrow">Actividad 1 · Comprensión del problema</div><h2>Caso: sistema web para solicitudes de certificados académicos</h2>
+<p>Una institución universitaria recibe solicitudes mediante atención presencial y registros manuales. El personal transcribe datos en hojas de cálculo y los estudiantes deben acudir o llamar para conocer el estado de sus trámites. La dirección desea mejorar la atención y permitir consultar el avance de cada solicitud.</p>
+<label>1.1 ¿Cuál es el problema principal? No describan todavía la solución.</label><textarea id="problem" placeholder="Situación, causas y consecuencias observables..."></textarea>
+<label>1.2 ¿Qué evidencias recolectarían para confirmar el problema?</label><textarea id="evidence" placeholder="Tiempos de atención, volumen de solicitudes, entrevistas..."></textarea>
+<label>1.3 Identifiquen interesados y participación.</label><textarea id="stakeholders" placeholder="Estudiantes, funcionarios, dirección, soporte TI..."></textarea>
+<label>1.4 ¿Qué restricciones y supuestos deben validar?</label><textarea id="constraints" placeholder="Presupuesto, conectividad, calendario, sistemas existentes..."></textarea>
+<div class="check"><input type="checkbox" class="done"> Completamos el análisis inicial del caso.</div></section>
+
+<section class="panel" id="alcance"><div class="eyebrow">Actividad 2 · ¿Qué se entregará?</div><h2>Alcance, exclusiones y aceptación</h2><div class="grid">
+<div><label>Alcance del producto</label><textarea id="productScope" placeholder="Funciones, módulos, interfaces, reportes..."></textarea></div>
+<div><label>Alcance del proyecto</label><textarea id="projectScope" placeholder="Análisis, diseño, desarrollo, pruebas, despliegue..."></textarea></div>
+<div><label>Exclusiones de la primera versión</label><textarea id="exclusions" placeholder="Qué no se incluirá..."></textarea></div>
+<div><label>Supuestos y restricciones</label><textarea id="scopeAssumptions"></textarea></div></div>
+<h3>2.1 Cinco criterios de aceptación verificables</h3><div id="acceptance"></div><div class="check"><input type="checkbox" class="done"> El alcance y los criterios son claros y verificables.</div></section>
+
+<section class="panel" id="req"><div class="eyebrow">Actividad 3 · Necesidades del producto</div><h2>Requisitos funcionales y no funcionales</h2>
+<p>Los funcionales describen qué debe hacer el sistema. Los no funcionales expresan atributos de calidad y condiciones de operación.</p><h3>3.1 Ocho requisitos funcionales y prioridad MoSCoW</h3><div id="functional"></div>
+<h3>3.2 Cinco requisitos no funcionales</h3><div id="nonfunctional"></div>
+<div class="call">MoSCoW: Must have (imprescindible), Should have (importante), Could have (deseable), Won't have now (no se incluirá ahora).</div><div class="check"><input type="checkbox" class="done"> Registramos y priorizamos los requisitos.</div></section>
+
+<section class="panel" id="arq"><div class="eyebrow">Actividad 4 · Diseño técnico</div><h2>Arquitectura y selección de tecnologías</h2><p>Consideren una arquitectura de tres capas: presentación, lógica de negocio y datos. Justifiquen las tecnologías según requisitos, capacidades, costos, seguridad, mantenimiento e integración.</p>
+<div class="grid"><div><label>Capa de presentación</label><textarea id="presentation" placeholder="Responsabilidad y tecnología..."></textarea></div><div><label>Capa de negocio</label><textarea id="business" placeholder="Reglas, validaciones, servicios..."></textarea></div><div><label>Capa de datos</label><textarea id="data" placeholder="Almacenamiento y consultas..."></textarea></div><div><label>Justificación de la arquitectura</label><textarea id="architectureReason"></textarea></div></div><div class="check"><input type="checkbox" class="done"> La arquitectura responde a requisitos y restricciones.</div></section>
+
+<section class="panel" id="edt"><div class="eyebrow">Actividad 5 · Descomposición del trabajo</div><h2>EDT / WBS</h2><p>Descompongan jerárquicamente el alcance total hasta llegar a paquetes estimables, asignables y controlables. La EDT responde qué trabajo debe realizarse.</p>
+<label>5.1 EDT del proyecto (mínimo tres niveles)</label><textarea id="wbs" style="min-height:180px" placeholder="1.0 Sistema de certificados&#10;  1.1 Análisis&#10;    1.1.1 Levantar requisitos&#10;    1.1.2 Modelar procesos&#10;  1.2 Diseño..."></textarea>
+<label>5.2 Describan tres paquetes de trabajo: resultado, responsable y condición de terminación.</label><textarea id="packages"></textarea><div class="check"><input type="checkbox" class="done"> La EDT cubre el alcance y contiene paquetes controlables.</div></section>
+
+<section class="panel" id="pert"><div class="eyebrow">Actividad 6 · Dimensionamiento</div><h2>Estimación de esfuerzo mediante PERT</h2><p>Fórmula: E = (O + 4M + P) / 6. El resultado es esfuerzo esperado en horas-persona, no una promesa exacta.</p>
+<div class="grid3"><div><label>Optimista (O)</label><input id="o" type="number" min="0" value="16"></div><div><label>Más probable (M)</label><input id="m" type="number" min="0" value="24"></div><div><label>Pesimista (P)</label><input id="p" type="number" min="0" value="40"></div></div>
+<button onclick="pert()">Calcular PERT</button><div id="pertResult" class="feedback">Resultado pendiente.</div>
+<label>Otras estimaciones: esfuerzo, duración, recursos, costos y supuestos.</label><textarea id="estimates"></textarea><div class="check"><input type="checkbox" class="done"> Diferenciamos esfuerzo, duración, costos y recursos.</div></section>
+
+<section class="panel" id="plan"><div class="eyebrow">Actividad 7 · Tiempo y dinero</div><h2>Cronograma y presupuesto</h2>
+<label>Actividades, duración, dependencias, semana e hitos</label><textarea id="schedule" style="min-height:150px" placeholder="Actividad | Duración | Dependencia | Semana | Hito..."></textarea>
+<label>Presupuesto estimado en COP y justificación</label><textarea id="budget" style="min-height:130px" placeholder="Análisis y diseño: $...&#10;Desarrollo: $...&#10;Pruebas: $...&#10;Infraestructura: $...&#10;Capacitación: $...&#10;Reserva: $..."></textarea>
+<div class="call">No presenten cifras hipotéticas como cotizaciones reales. Un presupuesto real requiere cantidades, tarifas, dedicaciones, cotizaciones y costos recurrentes sustentados.</div><div class="check"><input type="checkbox" class="done"> El cronograma respeta dependencias y el presupuesto declara supuestos.</div></section>
+
+<section class="panel" id="raci"><div class="eyebrow">Actividad 8 · Gobierno del trabajo</div><h2>Matriz de responsabilidades RACI</h2><p>R: realiza el trabajo. A: responde por el resultado y aprobación. C: aporta asesoría. I: recibe información.</p>
+<table><tr><th>Actividad</th><th>Director</th><th>Analista</th><th>Desarrollador</th><th>QA</th></tr>
+<tr><td>Levantar requisitos</td><td><input aria-label="RACI director"></td><td><input aria-label="RACI analista"></td><td><input aria-label="RACI desarrollador"></td><td><input aria-label="RACI QA"></td></tr>
+<tr><td>Diseñar arquitectura</td><td><input aria-label="RACI director arquitectura"></td><td><input aria-label="RACI analista arquitectura"></td><td><input aria-label="RACI desarrollador arquitectura"></td><td><input aria-label="RACI QA arquitectura"></td></tr>
+<tr><td>Construir módulos</td><td><input aria-label="RACI director construir"></td><td><input aria-label="RACI analista construir"></td><td><input aria-label="RACI desarrollador construir"></td><td><input aria-label="RACI QA construir"></td></tr>
+<tr><td>Ejecutar pruebas</td><td><input aria-label="RACI director pruebas"></td><td><input aria-label="RACI analista pruebas"></td><td><input aria-label="RACI desarrollador pruebas"></td><td><input aria-label="RACI QA pruebas"></td></tr>
+<tr><td>Aprobar entrega</td><td><input aria-label="RACI director aprobar"></td><td><input aria-label="RACI analista aprobar"></td><td><input aria-label="RACI desarrollador aprobar"></td><td><input aria-label="RACI QA aprobar"></td></tr></table>
+<label>¿Cómo evitarán vacíos o duplicidad de responsabilidades?</label><textarea id="raciReason"></textarea><div class="check"><input type="checkbox" class="done"> Asignamos responsabilidades claras.</div></section>
+
+<section class="panel" id="calidad"><div class="eyebrow">Actividad 9 · Aseguramiento</div><h2>Calidad, pruebas y seguridad</h2>
+<div class="grid"><div><label>Características de calidad prioritarias</label><textarea id="quality" placeholder="Adecuación funcional, rendimiento, seguridad, usabilidad..."></textarea></div><div><label>Pruebas previstas</label><textarea id="tests" placeholder="Unitarias, integración, sistema, aceptación..."></textarea></div><div><label>Controles de seguridad</label><textarea id="security" placeholder="Autenticación, roles, cifrado, respaldos, registros..."></textarea></div><div><label>Evidencias y condiciones de aceptación</label><textarea id="verification"></textarea></div></div><div class="check"><input type="checkbox" class="done"> Calidad y seguridad se planifican desde el inicio.</div></section>
+
+<section class="panel" id="riesgos"><div class="eyebrow">Actividad 10 · Incertidumbre y cambios</div><h2>Riesgos y control de cambios</h2>
+<label>Registro de al menos cinco riesgos: causa, evento, efecto, probabilidad, impacto, respuesta y responsable.</label><textarea id="risks" style="min-height:170px" placeholder="Riesgo 1: requisitos incompletos. Causa... Evento... Efecto... Probabilidad... Impacto... Respuesta... Responsable..."></textarea>
+<label>Procedimiento ante una solicitud de cambio</label><textarea id="change" placeholder="Registrar, analizar impactos, recomendar, aprobar/rechazar, actualizar y comunicar..."></textarea>
+<label>¿Qué impactos revisarían antes de aprobar una nueva función?</label><textarea id="impact" placeholder="Alcance, tiempo, costo, calidad, arquitectura, seguridad y riesgos..."></textarea>
+<div class="check"><input type="checkbox" class="done"> Definimos respuestas a riesgos y control de cambios.</div></section>
+
+<section class="panel" id="integracion"><div class="eyebrow">Actividad 11 · Coherencia del plan</div><h2>Integración del expediente</h2>
+<p>El alcance determina el trabajo; la EDT organiza ese trabajo; las estimaciones alimentan cronograma y presupuesto; los requisitos orientan arquitectura y pruebas; los riesgos pueden modificar reservas, actividades y controles.</p>
+<label>Resumen ejecutivo del plan (máximo 250 palabras)</label><textarea id="summary" style="min-height:140px"></textarea>
+<label>Principales decisiones y justificación</label><textarea id="decisions"></textarea>
+<label>Aspectos pendientes de validar con la organización</label><textarea id="pending"></textarea>
+<div class="check"><input type="checkbox" class="done"> Verificamos la coherencia entre alcance, requisitos, trabajo, tiempo, costo y riesgos.</div></section>
+
+<section class="panel" id="quiz"><div class="eyebrow">Actividad 12 · Autoevaluación</div><h2>Cuestionario interactivo</h2><p>Seleccione una respuesta por pregunta y pulse Calificar para obtener retroalimentación.</p>
+<div class="quizq" data-a="b" data-f="La planificación transforma objetivos en una ruta ejecutable, medible y controlable."><b>1. ¿Cuál es el propósito principal de la planificación?</b><label><input type="radio" name="q1" value="a"> Comenzar a programar inmediatamente.</label><label><input type="radio" name="q1" value="b"> Convertir objetivos en una ruta verificable.</label><label><input type="radio" name="q1" value="c"> Eliminar toda incertidumbre.</label></div>
+<div class="quizq" data-a="c" data-f="El tiempo máximo de respuesta es un atributo de rendimiento, un requisito no funcional."><b>2. ¿Cuál es un requisito no funcional?</b><label><input type="radio" name="q2" value="a"> Registrar una solicitud.</label><label><input type="radio" name="q2" value="b"> Consultar el estado.</label><label><input type="radio" name="q2" value="c"> Definir un tiempo máximo de respuesta.</label></div>
+<div class="quizq" data-a="a" data-f="La EDT/WBS descompone el alcance total del trabajo en componentes y paquetes."><b>3. ¿Para qué sirve la EDT/WBS?</b><label><input type="radio" name="q3" value="a"> Descomponer el trabajo.</label><label><input type="radio" name="q3" value="b"> Reemplazar el presupuesto.</label><label><input type="radio" name="q3" value="c"> Registrar únicamente riesgos.</label></div>
+<div class="quizq" data-a="b" data-f="El esfuerzo mide trabajo humano; la duración mide tiempo calendario."><b>4. ¿Diferencia entre esfuerzo y duración?</b><label><input type="radio" name="q4" value="a"> Son sinónimos.</label><label><input type="radio" name="q4" value="b"> Esfuerzo mide trabajo; duración mide tiempo.</label><label><input type="radio" name="q4" value="c"> Duración mide costos.</label></div>
+<div class="quizq" data-a="c" data-f="A significa Accountable: responde por el resultado y su aprobación."><b>5. ¿Qué representa A en RACI?</b><label><input type="radio" name="q5" value="a"> Informado.</label><label><input type="radio" name="q5" value="b"> Consultado.</label><label><input type="radio" name="q5" value="c"> Responsable último del resultado.</label></div>
+<div class="quizq" data-a="b" data-f="Los cambios se registran, analizan y aprueban antes de incorporarse al plan."><b>6. ¿Qué hacer ante una solicitud que amplía el alcance?</b><label><input type="radio" name="q6" value="a"> Incorporarla sin consultar.</label><label><input type="radio" name="q6" value="b"> Evaluar impactos y aplicar control de cambios.</label><label><input type="radio" name="q6" value="c"> Aceptarla si parece sencilla.</label></div>
+<div class="actions"><button onclick="grade()">Calificar</button><button class="secondary" onclick="resetQuiz()">Reiniciar cuestionario</button></div><div id="quizResult"></div></section>
+
+<section class="panel" id="entrega"><div class="eyebrow">Cierre · Evidencias</div><h2>Producto que debe entregar el equipo</h2>
+<ul><li>Análisis del problema e interesados.</li><li>Alcance, exclusiones y criterios de aceptación.</li><li>Requisitos priorizados.</li><li>Arquitectura preliminar justificada.</li><li>EDT/WBS y paquetes de trabajo.</li><li>Estimaciones, cronograma y presupuesto.</li><li>Matriz RACI.</li><li>Plan de calidad, pruebas y seguridad.</li><li>Registro de riesgos y procedimiento de cambios.</li><li>Resumen integrado y sustentación.</li></ul>
+<h3>Rúbrica de valoración (100 puntos)</h3><table><tr><th>Criterio</th><th>Puntos</th></tr><tr><td>Alcance y requisitos</td><td>20</td></tr><tr><td>Arquitectura y EDT</td><td>20</td></tr><tr><td>Estimaciones, cronograma y costos</td><td>20</td></tr><tr><td>Responsabilidades, calidad y seguridad</td><td>15</td></tr><tr><td>Comunicaciones y cambios</td><td>10</td></tr><tr><td>Riesgos</td><td>10</td></tr><tr><td>Coherencia y sustentación</td><td>5</td></tr></table>
+<div class="call"><b>Antes de entregar:</b> comprueben que cada estimación esté vinculada a trabajo definido, las fechas respeten dependencias y el presupuesto corresponda a los recursos planificados.</div>
+<div class="actions"><button onclick="downloadAnswers()">Descargar respuestas (.txt)</button><button class="secondary" onclick="print()">Imprimir / Guardar PDF</button><button class="secondary" onclick="clearAnswers()">Limpiar respuestas</button></div>
+<p id="msg" class="muted">Descargue una copia antes de cerrar la página; las respuestas se recopilan desde este navegador.</p></section>
+</main></div><footer>Recurso didáctico · Gestión de Proyectos de Software · Ingeniería de Sistemas · Universidad Popular del Cesar</footer>
+<script>
+function fields(id,n,title,placeholder,priority=false){let host=document.getElementById(id);for(let i=1;i<=n;i++){let d=document.createElement('div');d.className='task';d.innerHTML='<label>'+title+' '+i+'</label><textarea id="'+id+'_'+i+'" placeholder="'+placeholder+'"></textarea>'+(priority?'<label>Prioridad MoSCoW</label><select id="'+id+'_priority_'+i+'"><option value="">Seleccione</option><option>Must have</option><option>Should have</option><option>Could have</option><option>Won\'t have now</option></select>':'');host.appendChild(d);}}
+fields('acceptance',5,'Criterio','Condición observable y verificable...');
+fields('functional',8,'Requisito funcional','El sistema deberá...',true);
+fields('nonfunctional',5,'Requisito no funcional','El sistema deberá cumplir...');
+function pert(){let o=+document.getElementById('o').value,m=+document.getElementById('m').value,p=+document.getElementById('p').value,e=document.getElementById('pertResult');if(o<0||o>m||m>p){e.className='feedback bad';e.textContent='Use valores válidos: 0 ≤ O ≤ M ≤ P.';return;}e.className='feedback good';e.textContent='Esfuerzo esperado: '+((o+4*m+p)/6).toLocaleString('es-CO',{maximumFractionDigits:2})+' horas-persona.';}
+function grade(){let s=0,a=0;document.querySelectorAll('.quizq').forEach(q=>{q.querySelector('.feedback')?.remove();let v=q.querySelector('input:checked'),f=document.createElement('div');f.className='feedback';if(v){a++;if(v.value===q.dataset.a){s++;f.classList.add('good');f.textContent='Correcto. '+q.dataset.f;}else{f.classList.add('bad');f.textContent='Incorrecto. '+q.dataset.f;}}else{f.classList.add('bad');f.textContent='Sin responder. '+q.dataset.f;}q.appendChild(f);});document.getElementById('quizResult').innerHTML='<p class="score">Resultado: '+s+'/6 · '+Math.round(s/6*100)+' %</p><p>Respondidas: '+a+'/6.</p>';}
+function resetQuiz(){document.querySelectorAll('.quizq input').forEach(x=>x.checked=false);document.querySelectorAll('.quizq .feedback').forEach(x=>x.remove());document.getElementById('quizResult').innerHTML='';}
+function progress(){let all=[...document.querySelectorAll('.done')],n=all.filter(x=>x.checked).length,p=Math.round(n/all.length*100);document.getElementById('bar').style.width=p+'%';document.getElementById('pct').textContent=p+' % ('+n+'/'+all.length+' actividades)';}
+document.addEventListener('change',e=>{if(e.target.classList.contains('done'))progress();});
+function collect(){let a=[];document.querySelectorAll('input,textarea,select').forEach(x=>{if(x.type==='checkbox'||x.type==='radio'){if(x.checked)a.push(x.name+' = '+x.value);}else if(x.id&&x.value.trim())a.push(x.id+': '+x.value.trim());});return a.join('\n\n');}
+function downloadAnswers(){let text='TALLER INTERACTIVO: PLANIFICACIÓN DE UN PROYECTO DE SOFTWARE\nUNIVERSIDAD POPULAR DEL CESAR\n\n'+collect()+'\n\nAvance: '+document.getElementById('pct').textContent;let u=URL.createObjectURL(new Blob([text],{type:'text/plain;charset=utf-8'})),a=document.createElement('a');a.href=u;a.download='respuestas_taller_planificacion_software.txt';a.click();URL.revokeObjectURL(u);document.getElementById('msg').textContent='Archivo de respuestas generado.';}
+function clearAnswers(){if(!confirm('¿Desea borrar todas las respuestas?'))return;document.querySelectorAll('input,textarea,select').forEach(x=>{if(x.type==='checkbox'||x.type==='radio')x.checked=false;else x.value='';});resetQuiz();progress();document.getElementById('msg').textContent='Respuestas borradas.';}
+progress();
+</script></body></html>
