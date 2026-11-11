@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diseño metodológico de la investigación | Clase interactiva</title>
+<style>
+:root{
+  --navy:#10233d;--blue:#2469a8;--cyan:#2cb7be;--gold:#efb34f;
+  --ink:#26364a;--muted:#65758a;--paper:#f5f8fc;--white:#fff;
+  --line:#dce5ef;--green:#27845e;--red:#b84f55;--shadow:0 16px 45px rgba(16,35,61,.12)
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.55}
+.topbar{position:sticky;top:0;z-index:20;background:rgba(16,35,61,.96);color:#fff;padding:12px 4vw;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(10px)}
+.brand{font-size:.82rem;font-weight:800;letter-spacing:.12em;color:#9ce5e4}
+.topbar nav{display:flex;gap:8px;flex-wrap:wrap}
+.topbar button,.btn{border:1px solid rgba(255,255,255,.25);background:transparent;color:#fff;padding:8px 12px;border-radius:999px;cursor:pointer;font-weight:650}
+.topbar button:hover,.topbar button.active{background:var(--cyan);color:var(--navy);border-color:var(--cyan)}
+.progress{height:4px;background:#29415d;position:sticky;top:54px;z-index:19}
+.progress span{display:block;height:100%;width:0;background:var(--gold);transition:width .25s}
+.hero{min-height:72vh;background:linear-gradient(125deg,#10233d 0%,#174b78 58%,#1b8b94 100%);color:white;padding:9vh 8vw;display:grid;grid-template-columns:1.25fr .75fr;align-items:center;gap:3rem;overflow:hidden}
+.eyebrow{font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#9ce5e4;font-size:.78rem}
+h1{font-size:clamp(2.6rem,6vw,5.4rem);line-height:1.02;margin:.6rem 0 1.2rem;letter-spacing:-.04em}
+.hero p{font-size:1.2rem;max-width:720px;color:#e0edf7}
+.hero-art{display:grid;place-items:center;min-height:300px}
+.orbit{width:min(330px,75vw);aspect-ratio:1;border:1px solid rgba(255,255,255,.35);border-radius:50%;display:grid;place-items:center;position:relative}
+.orbit:before,.orbit:after{content:"";position:absolute;border:1px solid rgba(255,255,255,.25);border-radius:50%;inset:13%}
+.orbit:after{inset:28%}
+.core{width:38%;aspect-ratio:1;border-radius:28%;background:linear-gradient(135deg,var(--cyan),#b5f1e7);color:var(--navy);display:grid;place-items:center;font-size:2.4rem;font-weight:900;box-shadow:0 0 55px #52d3d0}
+.node{position:absolute;background:#fff;color:var(--navy);padding:10px 13px;border-radius:12px;font-weight:800;box-shadow:var(--shadow);font-size:.85rem}
+.n1{top:8%;left:34%}.n2{right:-4%;top:45%}.n3{bottom:8%;left:32%}.n4{left:-7%;top:44%}
+main{max-width:1120px;margin:auto;padding:30px 24px 90px}
+section{background:white;border:1px solid var(--line);border-radius:24px;padding:clamp(24px,4vw,48px);margin:28px 0;box-shadow:var(--shadow);scroll-margin-top:95px}
+.section-head{display:flex;align-items:flex-start;gap:16px;margin-bottom:24px}
+.num{width:48px;height:48px;flex:0 0 48px;border-radius:15px;background:#e5f5f4;color:#147d82;display:grid;place-items:center;font-weight:900;font-size:1.2rem}
+h2{font-size:clamp(1.7rem,3vw,2.5rem);color:var(--navy);margin:0;line-height:1.1}
+h3{color:var(--blue);margin:26px 0 10px;font-size:1.25rem}
+.lead{font-size:1.12rem;color:#45576d;max-width:900px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.card{border:1px solid var(--line);border-radius:16px;padding:19px;background:#fbfdff}
+.card strong{display:block;color:var(--navy);font-size:1.05rem;margin-bottom:7px}
+.tag{display:inline-block;padding:4px 9px;border-radius:999px;background:#e8f4fb;color:#1c5d8d;font-size:.75rem;font-weight:800;margin-bottom:9px}
+.callout{border-left:5px solid var(--cyan);background:#eff9f8;padding:17px 20px;border-radius:0 14px 14px 0;margin:20px 0}
+.example{background:#10233d;color:#eaf4fc;padding:20px;border-radius:16px;overflow:auto}
+.example code{font-family:Consolas,monospace;white-space:pre-wrap}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.94rem}
+th{background:var(--navy);color:white;text-align:left}
+th,td{padding:12px;border:1px solid var(--line);vertical-align:top}
+tr:nth-child(even) td{background:#f6f9fc}
+details{border:1px solid var(--line);border-radius:14px;padding:15px 18px;margin:10px 0;background:#fcfdff}
+summary{font-weight:800;color:var(--navy);cursor:pointer}
+.pillrow{display:flex;flex-wrap:wrap;gap:8px;margin:15px 0}
+.pill{border-radius:999px;padding:7px 12px;background:#eaf1f8;color:#274b70;font-size:.85rem;font-weight:700}
+.formula{font-size:1.45rem;text-align:center;background:#f2f7fc;border-radius:15px;padding:18px;font-family:Georgia,serif;color:var(--navy);overflow-wrap:anywhere}
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.btn{background:var(--blue);border-color:var(--blue);padding:10px 16px}
+.btn.secondary{background:white;color:var(--blue);border-color:var(--blue)}
+.btn.gold{background:var(--gold);border-color:var(--gold);color:var(--navy)}
+.quiz-q{padding:18px;border:1px solid var(--line);border-radius:15px;margin:14px 0}
+.quiz-q label{display:block;padding:8px 10px;border-radius:9px;cursor:pointer}
+.quiz-q label:hover{background:#f0f6fb}
+.feedback{font-weight:800;margin-top:8px}
+.good{color:var(--green)}.bad{color:var(--red)}
+footer{text-align:center;color:var(--muted);padding:35px 20px}
+.small{font-size:.88rem;color:var(--muted)}
+.kpi{font-size:2rem;font-weight:900;color:var(--blue)}
+@media(max-width:800px){.hero{grid-template-columns:1fr;padding:70px 7vw}.hero-art{min-height:230px}.grid,.grid.three{grid-template-columns:1fr}.topbar{align-items:flex-start;flex-direction:column}.progress{top:96px}main{padding:18px 12px 60px}section{border-radius:17px}}
+@media print{.topbar,.progress,.controls,.hero-art{display:none!important}.hero{min-height:auto;padding:35px;background:#10233d!important;print-color-adjust:exact}section{box-shadow:none;break-inside:avoid}body{background:white}main{max-width:none;padding:0}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">METODOLOGÍA DE LA INVESTIGACIÓN · INGENIERÍA</div>
+  <nav aria-label="Navegación de contenidos">
+    <button class="active" data-target="alcance">Alcance</button>
+    <button data-target="hipotesis">Hipótesis</button>
+    <button data-target="variables">Variables</button>
+    <button data-target="diseno">Diseño</button>
+    <button data-target="poblacion">Población y muestra</button>
+    <button data-target="actividad">Actividad</button>
+  </nav>
+</header>
+<div class="progress"><span id="progressBar"></span></div>
+
+<div class="hero">
+  <div>
+    <div class="eyebrow">Clase universitaria · Recurso didáctico interactivo</div>
+    <h1>Diseño metodológico<br>de la investigación</h1>
+    <p>Alcance, hipótesis, variables, diseño de investigación, población y muestra.</p>
+    <div class="pillrow">
+      <span class="pill">Conceptos clave</span><span class="pill">Ejemplos en Ingeniería de Sistemas</span><span class="pill">Aplicación práctica</span>
+    </div>
+    <a class="btn gold" href="#alcance" style="display:inline-block;text-decoration:none">Comenzar la clase ↓</a>
+  </div>
+  <div class="hero-art" aria-hidden="true">
+    <div class="orbit"><div class="core">M</div><span class="node n1">Alcance</span><span class="node n2">Variables</span><span class="node n3">Muestra</span><span class="node n4">Diseño</span></div>
+  </div>
+</div>
+
+<main>
+<section id="ruta">
+ <div class="section-head"><div class="num">00</div><div><h2>Propósito de aprendizaje</h2><p class="lead">Comprender cómo se articulan las decisiones metodológicas para convertir una pregunta de investigación en un plan viable y científicamente coherente.</p></div></div>
+ <div class="grid three">
+  <div class="card"><span class="tag">Comprender</span><strong>Conceptos</strong>Definir los componentes del diseño metodológico y reconocer su función.</div>
+  <div class="card"><span class="tag">Relacionar</span><strong>Coherencia</strong>Vincular pregunta, objetivos, alcance, hipótesis y variables.</div>
+  <div class="card"><span class="tag">Aplicar</span><strong>Decisiones</strong>Seleccionar diseño, población y muestra para un problema de Ingeniería.</div>
+ </div>
+ <div class="callout"><strong>Pregunta orientadora:</strong> ¿Cómo demostramos, con evidencia y un procedimiento transparente, que una solución tecnológica responde al problema investigado?</div>
+</section>
+
+<section id="alcance">
+ <div class="section-head"><div class="num">01</div><div><h2>Alcance de la investigación</h2><p class="lead">Indica la profundidad y el propósito con que se estudiará un fenómeno: qué se pretende conocer, caracterizar, relacionar o explicar.</p></div></div>
+ <div class="grid">
+  <div class="card"><span class="tag">Exploratorio</span><strong>¿Qué se conoce del fenómeno?</strong>Se utiliza cuando el tema ha sido poco estudiado o se necesita una primera aproximación. Ayuda a identificar variables y formular preguntas.</div>
+  <div class="card"><span class="tag">Descriptivo</span><strong>¿Cómo es y cómo se manifiesta?</strong>Caracteriza propiedades, comportamientos, frecuencias o perfiles. No busca necesariamente explicar causas.</div>
+  <div class="card"><span class="tag">Correlacional</span><strong>¿Qué relación existe?</strong>Estudia la asociación entre variables. Una correlación, por sí sola, no demuestra causalidad.</div>
+  <div class="card"><span class="tag">Explicativo</span><strong>¿Por qué ocurre?</strong>Examina factores y mecanismos que podrían explicar un fenómeno. Las afirmaciones causales requieren diseños y controles adecuados.</div>
+ </div>
+ <h3>Ejemplos en Ingeniería de Sistemas</h3>
+ <table><thead><tr><th>Alcance</th><th>Ejemplo de pregunta</th><th>Resultado esperado</th></tr></thead><tbody>
+ <tr><td>Exploratorio</td><td>¿Cómo utilizan IA generativa los estudiantes de primer semestre?</td><td>Reconocer prácticas y posibles factores.</td></tr>
+ <tr><td>Descriptivo</td><td>¿Cuál es el nivel de competencias digitales de los estudiantes?</td><td>Caracterizar niveles y frecuencias.</td></tr>
+ <tr><td>Correlacional</td><td>¿Qué relación existe entre horas de práctica y desempeño en programación?</td><td>Estimar dirección y magnitud de asociación.</td></tr>
+ <tr><td>Explicativo</td><td>¿En qué medida una estrategia adaptativa mejora el desempeño?</td><td>Evaluar explicaciones o efectos con diseño apropiado.</td></tr>
+ </tbody></table>
+ <div class="callout"><strong>Precisión:</strong> los alcances no son fases obligatorias ni categorías rígidas. Un estudio puede combinar propósitos, por ejemplo, describir una población y analizar asociaciones.</div>
+ <details><summary>Pregunta para discusión en clase</summary><p>Una investigación registra la satisfacción de usuarios de una aplicación y presenta porcentajes por edad. ¿Su propósito principal es exploratorio, descriptivo, correlacional o explicativo? Justifique con el objetivo, no solo con la técnica utilizada.</p></details>
+</section>
+
+<section id="hipotesis">
+ <div class="section-head"><div class="num">02</div><div><h2>Hipótesis de investigación</h2><p class="lead">Es una proposición tentativa, fundamentada y contrastable sobre un fenómeno, una relación entre variables o una diferencia entre grupos.</p></div></div>
+ <div class="callout"><strong>No es una conclusión anticipada.</strong> Es una respuesta provisional que debe confrontarse con datos y procedimientos de análisis adecuados.</div>
+ <h3>Tipos frecuentes</h3>
+ <div class="grid">
+  <div class="card"><strong>Hipótesis de investigación (Hi)</strong>Plantea la relación o resultado esperado.<br><em>La plataforma adaptativa mejora el desempeño en programación.</em></div>
+  <div class="card"><strong>Hipótesis nula (H₀)</strong>Plantea ausencia de diferencia o relación según la prueba.<br><em>No existen diferencias en el desempeño entre los grupos.</em></div>
+  <div class="card"><strong>Hipótesis alternativa (Ha)</strong>En el contraste estadístico, representa una alternativa a H₀.<br><em>Existen diferencias en el desempeño entre los grupos.</em></div>
+  <div class="card"><strong>Direccional / no direccional</strong>La direccional anticipa el sentido; la no direccional anticipa una relación o diferencia sin indicar sentido.</div>
+ </div>
+ <h3>Ejemplo integrado</h3>
+ <p><strong>Pregunta:</strong> ¿La utilización de una plataforma adaptativa se relaciona con el rendimiento en programación?</p>
+ <table><thead><tr><th>Proposición</th><th>Formulación ilustrativa</th></tr></thead><tbody>
+ <tr><td>Hi direccional</td><td>Los estudiantes que utilizan la plataforma obtienen un promedio mayor que quienes no la utilizan.</td></tr>
+ <tr><td>H₀</td><td>El promedio de rendimiento no difiere entre los grupos.</td></tr>
+ <tr><td>Ha no direccional</td><td>El promedio de rendimiento difiere entre los grupos.</td></tr>
+ </tbody></table>
+ <div class="callout"><strong>Importante:</strong> no todas las investigaciones requieren hipótesis. En estudios exploratorios, descriptivos o cualitativos pueden no formularse hipótesis estadísticas; depende del enfoque, alcance y propósito.</div>
+ <details><summary>¿Qué hace que una hipótesis sea adecuada?</summary><ul><li>Es clara y delimitada.</li><li>Se relaciona con el problema y los objetivos.</li><li>Identifica conceptos o variables observables cuando corresponde.</li><li>Puede contrastarse con evidencia empírica.</li><li>Tiene fundamento teórico y metodológico.</li></ul></details>
+</section>
+
+<section id="variables">
+ <div class="section-head"><div class="num">03</div><div><h2>Variables de investigación</h2><p class="lead">Son características o atributos que pueden asumir distintos valores o categorías y que se observan, miden o analizan.</p></div></div>
+ <h3>Según su función en el estudio</h3>
+ <div class="grid three">
+  <div class="card"><strong>Independiente (VI)</strong>Factor antecedente o predictor. En un experimento puede ser manipulado o asignado por el investigador.</div>
+  <div class="card"><strong>Dependiente (VD)</strong>Resultado cuyo comportamiento se mide o pretende explicar.</div>
+  <div class="card"><strong>Control / interviniente</strong>Factores que pueden influir en la relación principal y deben considerarse en el diseño o análisis.</div>
+ </div>
+ <h3>Según su naturaleza y escala</h3>
+ <table><thead><tr><th>Tipo</th><th>Descripción</th><th>Ejemplo</th></tr></thead><tbody>
+ <tr><td>Cualitativa nominal</td><td>Categorías sin orden.</td><td>Sistema operativo utilizado.</td></tr>
+ <tr><td>Cualitativa ordinal</td><td>Categorías ordenables.</td><td>Satisfacción: baja, media, alta.</td></tr>
+ <tr><td>Cuantitativa discreta</td><td>Valores contables.</td><td>Número de errores detectados.</td></tr>
+ <tr><td>Cuantitativa continua</td><td>Valores medibles en un intervalo.</td><td>Tiempo de respuesta en segundos.</td></tr>
+ </tbody></table>
+ <h3>Operacionalización: del concepto a la medición</h3>
+ <p>Operacionalizar es especificar cómo se observará o medirá una variable: definición, dimensiones, indicadores, instrumento y escala.</p>
+ <table><thead><tr><th>Elemento</th><th>Ejemplo: rendimiento académico</th></tr></thead><tbody>
+ <tr><td>Variable</td><td>Rendimiento académico.</td></tr>
+ <tr><td>Definición conceptual</td><td>Nivel de logro alcanzado en el aprendizaje.</td></tr>
+ <tr><td>Dimensión</td><td>Resolución de problemas algorítmicos.</td></tr>
+ <tr><td>Indicador</td><td>Puntaje obtenido en una prueba práctica.</td></tr>
+ <tr><td>Instrumento</td><td>Prueba práctica con rúbrica de evaluación.</td></tr>
+ <tr><td>Escala</td><td>Calificación de 0 a 5, según los criterios institucionales.</td></tr>
+ </tbody></table>
+ <div class="callout"><strong>Distinción:</strong> variable = qué se estudia; dimensión = componente de la variable; indicador = evidencia observable; instrumento = medio para recoger la evidencia.</div>
+ <details><summary>Ejemplo de variables para evaluar software</summary>
+ <table><thead><tr><th>Variable</th><th>Dimensión</th><th>Indicador posible</th></tr></thead><tbody>
+ <tr><td>Calidad del software</td><td>Rendimiento</td><td>Tiempo promedio de respuesta.</td></tr>
+ <tr><td>Calidad del software</td><td>Fiabilidad</td><td>Porcentaje de operaciones exitosas.</td></tr>
+ <tr><td>Usabilidad</td><td>Efectividad</td><td>Porcentaje de tareas completadas.</td></tr>
+ <tr><td>Seguridad</td><td>Vulnerabilidades</td><td>Número y severidad de hallazgos en pruebas.</td></tr>
+ </tbody></table>
+ </details>
+</section>
+
+<section id="diseno">
+ <div class="section-head"><div class="num">04</div><div><h2>Diseño de investigación</h2><p class="lead">Es la estrategia general que define cómo se obtendrán, analizarán e interpretarán los datos para responder la pregunta y cumplir los objetivos.</p></div></div>
+ <h3>Diseños cuantitativos frecuentes</h3>
+ <div class="grid">
+  <div class="card"><span class="tag">Experimental</span><strong>Manipulación y control</strong>El investigador manipula una variable independiente y mide sus efectos. La asignación aleatoria fortalece la inferencia causal.</div>
+  <div class="card"><span class="tag">Cuasiexperimental</span><strong>Intervención sin asignación aleatoria</strong>Evalúa una intervención en grupos ya conformados o con asignación no aleatoria; exige considerar diferencias iniciales.</div>
+  <div class="card"><span class="tag">No experimental transversal</span><strong>Observación en un momento</strong>Analiza variables sin manipularlas, con medición en un momento o periodo definido.</div>
+  <div class="card"><span class="tag">No experimental longitudinal</span><strong>Observación a través del tiempo</strong>Recoge datos en distintos momentos para examinar cambios o trayectorias.</div>
+ </div>
+ <h3>Otras estrategias según el enfoque</h3>
+ <table><thead><tr><th>Enfoque</th><th>Estrategia</th><th>Propósito</th></tr></thead><tbody>
+ <tr><td>Cualitativo</td><td>Estudio de caso</td><td>Comprender un fenómeno en su contexto.</td></tr>
+ <tr><td>Cualitativo</td><td>Fenomenológico</td><td>Comprender experiencias vividas.</td></tr>
+ <tr><td>Cualitativo</td><td>Etnográfico</td><td>Estudiar prácticas y dinámicas culturales.</td></tr>
+ <tr><td>Cualitativo</td><td>Investigación-acción</td><td>Comprender y transformar una práctica mediante ciclos de acción y reflexión.</td></tr>
+ <tr><td>Mixto</td><td>Convergente</td><td>Integrar y comparar datos cuantitativos y cualitativos.</td></tr>
+ <tr><td>Mixto</td><td>Secuencial explicativo</td><td>Analizar datos cuantitativos y profundizar luego con datos cualitativos.</td></tr>
+ </tbody></table>
+ <div class="callout"><strong>Alcance ≠ diseño:</strong> el alcance señala hasta dónde se pretende llegar; el diseño indica cómo se desarrollará el estudio. Un estudio correlacional, por ejemplo, puede tener diseño no experimental transversal.</div>
+ <h3>Lista de verificación del diseño</h3>
+ <div class="grid three">
+  <div class="card">1. Enfoque y finalidad</div><div class="card">2. Alcance y diseño específico</div><div class="card">3. Participantes o unidades</div>
+  <div class="card">4. Técnicas e instrumentos</div><div class="card">5. Procedimiento de análisis</div><div class="card">6. Ética y protección de datos</div>
+ </div>
+</section>
+
+<section id="poblacion">
+ <div class="section-head"><div class="num">05</div><div><h2>Población y muestra</h2><p class="lead">Delimitan sobre quiénes o qué unidades se obtendrán datos y a qué conjunto se espera que se refieran las conclusiones.</p></div></div>
+ <h3>Población</h3>
+ <p>Conjunto de unidades que comparten características definidas y sobre el cual se formula la pregunta o se pretende concluir. Puede incluir personas, organizaciones, documentos, dispositivos, transacciones o sistemas.</p>
+ <div class="grid">
+  <div class="card"><strong>Población finita</strong>Su número de elementos puede determinarse. Ejemplo: 240 estudiantes matriculados en un periodo.</div>
+  <div class="card"><strong>Población conceptualmente infinita</strong>El conjunto se considera ilimitado o no enumerado en la práctica. Ejemplo: solicitudes potenciales a un servicio web.</div>
+  <div class="card"><strong>Población objetivo</strong>Conjunto al que se desea referir el estudio, según sus límites.</div>
+  <div class="card"><strong>Población accesible</strong>Parte de la población objetivo a la que realmente se puede acceder.</div>
+ </div>
+ <div class="callout"><strong>Unidad de análisis:</strong> elemento sobre el que se recoge y analiza información: un estudiante, una aplicación, una transacción, un sensor o un registro de incidentes.</div>
+ <h3>Muestra</h3>
+ <p>Subconjunto de unidades de la población seleccionado para recopilar información. En estudios cuantitativos probabilísticos puede sustentar inferencias estadísticas si el diseño, la selección y los supuestos son apropiados. En estudios cualitativos la selección suele priorizar pertinencia y riqueza de información.</p>
+ <h3>Tipos de muestreo</h3>
+ <div class="grid">
+  <div class="card"><span class="tag">Probabilístico</span><strong>Aleatorio simple</strong>Selección al azar con probabilidades conocidas.</div>
+  <div class="card"><span class="tag">Probabilístico</span><strong>Sistemático</strong>Selección mediante un intervalo después de un inicio aleatorio.</div>
+  <div class="card"><span class="tag">Probabilístico</span><strong>Estratificado</strong>Se divide la población en estratos y se selecciona en cada uno.</div>
+  <div class="card"><span class="tag">Probabilístico</span><strong>Por conglomerados</strong>Se seleccionan grupos naturales, como cursos o sedes.</div>
+  <div class="card"><span class="tag">No probabilístico</span><strong>Conveniencia</strong>Participantes disponibles y accesibles.</div>
+  <div class="card"><span class="tag">No probabilístico</span><strong>Intencional, cuotas o bola de nieve</strong>Selección por criterios, cantidades definidas o referencias entre participantes.</div>
+ </div>
+ <h3>Cálculo ilustrativo para población finita</h3>
+ <p>Para estimar una proporción bajo muestreo aleatorio simple, con población finita y los supuestos indicados, puede utilizarse:</p>
+ <div class="formula">n = (N · Z² · p · q) / [e²(N − 1) + Z² · p · q]</div>
+ <div class="grid">
+  <div class="card"><strong>N</strong>Tamaño de la población.</div><div class="card"><strong>Z</strong>Valor correspondiente al nivel de confianza.</div>
+  <div class="card"><strong>p y q</strong>Proporción esperada y su complemento (q = 1 − p).</div><div class="card"><strong>e</strong>Margen de error permitido.</div>
+ </div>
+ <h3>Calculadora de ejemplo</h3>
+ <p class="small">Modifique los datos para observar el tamaño aproximado de muestra. El cálculo supone muestreo aleatorio simple, estimación de proporción y respuesta completa.</p>
+ <div class="grid">
+  <div class="card"><label for="N">Población (N)</label><input id="N" type="number" min="2" value="500"></div>
+  <div class="card"><label for="conf">Confianza</label><select id="conf"><option value="1.645">90 %</option><option value="1.96" selected>95 %</option><option value="2.576">99 %</option></select></div>
+  <div class="card"><label for="p">Proporción esperada (p)</label><input id="p" type="number" min="0.01" max="0.99" step="0.01" value="0.5"></div>
+  <div class="card"><label for="e">Margen de error (e)</label><input id="e" type="number" min="0.001" max="0.5" step="0.005" value="0.05"></div>
+ </div>
+ <div class="callout"><div class="small">Tamaño de muestra estimado</div><div class="kpi" id="result">218</div><div id="calcExplain" class="small">Para una población de 500 unidades.</div></div>
+ <div class="callout"><strong>Advertencia:</strong> esta fórmula no se aplica automáticamente a estudios cualitativos, experimentales, censales o muestras no probabilísticas. También pueden requerirse ajustes por no respuesta, conglomerados y otros efectos del diseño.</div>
+</section>
+
+<section id="caso">
+ <div class="section-head"><div class="num">06</div><div><h2>Caso integrador: plataforma adaptativa</h2><p class="lead">Observe cómo se conectan los componentes metodológicos en un proyecto de Ingeniería de Sistemas.</p></div></div>
+ <div class="card">
+  <span class="tag">Título de ejemplo</span>
+  <strong>Desarrollo e implementación de una plataforma web de aprendizaje adaptativo para fortalecer competencias de programación en estudiantes de primer semestre.</strong>
+  <p><strong>Pregunta:</strong> ¿En qué medida la implementación de la plataforma contribuye al fortalecimiento de las competencias de programación?</p>
+ </div>
+ <table><thead><tr><th>Componente</th><th>Decisión ilustrativa</th></tr></thead><tbody>
+ <tr><td>Alcance</td><td>Explicativo, si se busca evaluar el efecto de la intervención.</td></tr>
+ <tr><td>Hipótesis</td><td>El uso de la plataforma mejora el desempeño en programación.</td></tr>
+ <tr><td>VI</td><td>Exposición o uso de la plataforma adaptativa.</td></tr>
+ <tr><td>VD</td><td>Competencias de programación medidas mediante una prueba.</td></tr>
+ <tr><td>Control</td><td>Conocimientos previos, práctica y acceso tecnológico.</td></tr>
+ <tr><td>Enfoque y diseño</td><td>Cuantitativo; cuasiexperimental si se trabaja con grupos preexistentes sin asignación aleatoria.</td></tr>
+ <tr><td>Población</td><td>Estudiantes de primer semestre del programa en el periodo delimitado.</td></tr>
+ <tr><td>Muestra</td><td>Participantes de los grupos disponibles, seleccionados y justificados según el diseño.</td></tr>
+ </tbody></table>
+ <div class="callout"><strong>Discusión:</strong> si no existe grupo de comparación, ¿qué limitaciones tendría afirmar que la plataforma causó una mejora? ¿Qué otras explicaciones podrían producir el cambio observado?</div>
+</section>
+
+<section id="actividad">
+ <div class="section-head"><div class="num">07</div><div><h2>Actividad de aplicación y comprobación</h2><p class="lead">Resuelva las preguntas y utilice la retroalimentación para revisar los conceptos.</p></div></div>
+ <p><strong>Situación:</strong> un equipo desea estudiar la relación entre las horas semanales de práctica de programación y la calificación obtenida por estudiantes de primer semestre.</p>
+ <div id="quiz">
+  <div class="quiz-q" data-answer="b" data-explain="El estudio busca identificar asociación entre dos variables; eso corresponde al alcance correlacional.">
+   <strong>1. ¿Cuál sería el alcance principal?</strong>
+   <label><input type="radio" name="q1" value="a"> Exploratorio</label><label><input type="radio" name="q1" value="b"> Correlacional</label><label><input type="radio" name="q1" value="c"> Explicativo</label>
+   <div class="feedback"></div>
+  </div>
+  <div class="quiz-q" data-answer="c" data-explain="Las horas de práctica pueden tratarse como variable predictora y la calificación como resultado. La asociación no prueba causalidad.">
+   <strong>2. ¿Cuál es la variable dependiente en este planteamiento?</strong>
+   <label><input type="radio" name="q2" value="a"> Programa académico</label><label><input type="radio" name="q2" value="b"> Horas de práctica</label><label><input type="radio" name="q2" value="c"> Calificación obtenida</label>
+   <div class="feedback"></div>
+  </div>
+  <div class="quiz-q" data-answer="a" data-explain="Si solo se observan las horas y las calificaciones sin intervenir, se trata de un diseño no experimental.">
+   <strong>3. Si no se manipulan variables y se recogen datos una sola vez, ¿qué diseño es apropiado?</strong>
+   <label><input type="radio" name="q3" value="a"> No experimental transversal</label><label><input type="radio" name="q3" value="b"> Experimental</label><label><input type="radio" name="q3" value="c"> Cuasiexperimental</label>
+   <div class="feedback"></div>
+  </div>
+  <div class="quiz-q" data-answer="b" data-explain="La población es el conjunto completo definido; la muestra es el subconjunto seleccionado para recopilar datos.">
+   <strong>4. ¿Qué representa la muestra?</strong>
+   <label><input type="radio" name="q4" value="a"> Todos los estudiantes que podrían estudiar programación en el país</label><label><input type="radio" name="q4" value="b"> El subconjunto de estudiantes seleccionado para el estudio</label><label><input type="radio" name="q4" value="c"> La calificación promedio</label>
+   <div class="feedback"></div>
+  </div>
+ </div>
+ <div class="controls"><button class="btn" onclick="gradeQuiz()">Calificar respuestas</button><button class="btn secondary" onclick="resetQuiz()">Reiniciar</button></div>
+ <div id="score" class="callout" aria-live="polite">Responda las cuatro preguntas y seleccione “Calificar respuestas”.</div>
+ <h3>Producto académico</h3>
+ <p>En equipos, seleccionen un problema de desarrollo de software, inteligencia artificial, bases de datos, ciberseguridad, sistemas de información o automatización. Elaboren una ficha con:</p>
+ <ol><li>Pregunta y objetivo general.</li><li>Alcance y justificación.</li><li>Hipótesis, si corresponde.</li><li>Variables y matriz de operacionalización.</li><li>Enfoque y diseño.</li><li>Población, unidad de análisis y muestra.</li><li>Técnicas e instrumentos de recolección.</li></ol>
+ <div class="callout"><strong>Criterio de evaluación:</strong> coherencia entre problema, objetivos, alcance, hipótesis, variables, diseño y selección de unidades de estudio.</div>
+</section>
+
+<section id="cierre">
+ <div class="section-head"><div class="num">08</div><div><h2>Síntesis y referencias</h2><p class="lead">La calidad metodológica depende de la coherencia entre las decisiones, la evidencia y los límites de las conclusiones.</p></div></div>
+ <div class="grid three">
+  <div class="card"><strong>Alcance</strong>Hasta dónde llega el estudio.</div>
+  <div class="card"><strong>Hipótesis</strong>Qué proposición se somete a contraste.</div>
+  <div class="card"><strong>Variables</strong>Qué atributos se observan o miden.</div>
+  <div class="card"><strong>Diseño</strong>Cómo se obtienen y analizan los datos.</div>
+  <div class="card"><strong>Población</strong>Sobre qué conjunto se desea estudiar.</div>
+  <div class="card"><strong>Muestra</strong>Qué unidades se seleccionan y cómo.</div>
+ </div>
+ <h3>Referencias bibliográficas</h3>
+ <ol>
+  <li>Hernández-Sampieri, R., & Mendoza Torres, C. P. (2018). <em>Metodología de la investigación: Las rutas cuantitativa, cualitativa y mixta</em>. McGraw-Hill Education.</li>
+  <li>Creswell, J. W., & Creswell, J. D. (2018). <em>Research Design: Qualitative, Quantitative, and Mixed Methods Approaches</em> (5th ed.). SAGE.</li>
+  <li>Babbie, E. (2020). <em>The Practice of Social Research</em> (15th ed.). Cengage.</li>
+  <li>Shadish, W. R., Cook, T. D., & Campbell, D. T. (2002). <em>Experimental and Quasi-Experimental Designs for Generalized Causal Inference</em>. Houghton Mifflin.</li>
+ </ol>
+ <div class="controls"><button class="btn" onclick="window.print()">Imprimir / Guardar como PDF</button><button class="btn secondary" onclick="window.scrollTo({top:0,behavior:'smooth'})">Volver al inicio ↑</button></div>
+</section>
+</main>
+<footer>Recurso didáctico de Metodología de la Investigación · Ingeniería de Sistemas · Documento HTML autónomo</footer>
+
+<script>
+const sections=[...document.querySelectorAll('main section')];
+const navButtons=[...document.querySelectorAll('.topbar button[data-target]')];
+const bar=document.getElementById('progressBar');
+function updateProgress(){
+ const scrollable=document.documentElement.scrollHeight-innerHeight;
+ bar.style.width=(scrollable>0?(scrollY/scrollable)*100:0)+'%';
+ let current='';
+ sections.forEach(s=>{if(scrollY>=s.offsetTop-150)current=s.id});
+ navButtons.forEach(b=>b.classList.toggle('active',b.dataset.target===current));
+}
+window.addEventListener('scroll',updateProgress);window.addEventListener('resize',updateProgress);updateProgress();
+navButtons.forEach(b=>b.addEventListener('click',()=>document.getElementById(b.dataset.target).scrollIntoView({behavior:'smooth'})));
+
+function calculate(){
+ const N=Number(document.getElementById('N').value);
+ const Z=Number(document.getElementById('conf').value);
+ const p=Number(document.getElementById('p').value);
+ const e=Number(document.getElementById('e').value);
+ const result=document.getElementById('result');
+ const explain=document.getElementById('calcExplain');
+ if(!Number.isFinite(N)||N<2||p<=0||p>=1||e<=0||e>=1){
+   result.textContent='—';explain.textContent='Verifique N ≥ 2, 0 < p < 1 y 0 < e < 1.';return;
+ }
+ const q=1-p;const n=(N*Z*Z*p*q)/(e*e*(N-1)+Z*Z*p*q);
+ result.textContent=Math.ceil(n);
+ explain.textContent=`Tamaño calculado: ${n.toFixed(2)}; se redondea hacia arriba para obtener ${Math.ceil(n)} participantes.`;
+}
+['N','conf','p','e'].forEach(id=>document.getElementById(id).addEventListener('input',calculate));
+calculate();
+
+function gradeQuiz(){
+ let score=0,answered=0;
+ document.querySelectorAll('.quiz-q').forEach((q,i)=>{
+   const selected=q.querySelector('input:checked');const fb=q.querySelector('.feedback');
+   if(!selected){fb.textContent='Pendiente de respuesta.';fb.className='feedback bad';return;}
+   answered++;
+   if(selected.value===q.dataset.answer){score++;fb.textContent='Correcto. '+q.dataset.explain;fb.className='feedback good';}
+   else{fb.textContent='Revisa. '+q.dataset.explain;fb.className='feedback bad';}
+ });
+ document.getElementById('score').textContent=`Resultado: ${score} de 4 respuestas correctas. Respondidas: ${answered} de 4.`;
+}
+function resetQuiz(){
+ document.querySelectorAll('.quiz-q input').forEach(i=>i.checked=false);
+ document.querySelectorAll('.feedback').forEach(f=>{f.textContent='';f.className='feedback';});
+ document.getElementById('score').textContent='Responda las cuatro preguntas y seleccione “Calificar respuestas”.';
+}
+</script>
+</body>
+</html>
