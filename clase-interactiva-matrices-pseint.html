@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Matrices y arreglos bidimensionales en PSeInt</title>
+<style>
+:root{--n:#102a43;--b:#1769aa;--t:#169da3;--g:#21845d;--bg:#f3f7fb;--ink:#26384a;--line:#d9e3ec}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.58 "Segoe UI",Arial,sans-serif}
+header{background:linear-gradient(120deg,var(--n),var(--b),var(--t));color:white;padding:42px 20px}
+.wrap{max-width:1050px;margin:auto}h1{font-size:clamp(2.1rem,5vw,3.4rem);line-height:1.08;margin:.35em 0}header p{max-width:820px;font-size:1.08rem}
+nav{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--line);z-index:5;overflow:auto;white-space:nowrap;padding:11px}nav .wrap{display:flex;gap:18px}nav a{color:var(--b);font-weight:700;text-decoration:none}
+main{max-width:1050px;margin:25px auto;padding:0 16px}.slide{background:#fff;border:1px solid var(--line);border-radius:17px;padding:clamp(20px,4vw,34px);margin:20px 0;box-shadow:0 8px 24px #183b590b;animation:up .5s ease both}
+@keyframes up{from{opacity:0;transform:translateY(13px)}to{opacity:1;transform:none}}
+.tag{font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--b);font-weight:800}h2{color:var(--n);font-size:clamp(1.5rem,3vw,2rem);margin:.3em 0}h3{color:var(--b)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:13px}.card{border:1px solid var(--line);border-radius:12px;padding:15px}
+.note{background:#edf8fa;border-left:5px solid var(--t);padding:14px 17px;border-radius:8px;margin:16px 0}.warn{background:#fff8e8;border-color:#dba12e}
+table{width:100%;border-collapse:collapse;margin:14px 0}th,td{border:1px solid var(--line);padding:10px;text-align:center}th{background:#eaf2f8;color:var(--n)}
+pre{background:#102a43;color:#e9f3fb;padding:17px;border-radius:12px;overflow:auto;font-size:.9rem;line-height:1.5}
+.matrix{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;max-width:520px;margin:20px auto}.cell{background:#e8f2fa;border:2px solid #b9d2e5;border-radius:10px;padding:16px 4px;text-align:center;font-weight:800;transition:.25s}.cell.active{background:var(--b);border-color:var(--b);color:#fff;transform:scale(1.06)}.cell.done{background:#ddf2e7;border-color:#8bc6a5;color:#17613d}
+button{border:0;border-radius:9px;background:var(--b);color:white;font-weight:700;padding:11px 15px;margin:4px;cursor:pointer}button.alt{background:#e8eff5;color:var(--n)}button.green{background:var(--g)}button:disabled{opacity:.4}
+.controls{display:flex;justify-content:center;flex-wrap:wrap}.progress{height:8px;background:#e4edf4;border-radius:20px;overflow:hidden}.progress span{display:block;height:100%;background:var(--t);width:0;transition:.3s}
+.invoice{max-width:640px;margin:16px auto;border:1px dashed #9badbd;border-radius:12px;padding:17px}.total{display:flex;justify-content:space-between;border-top:2px solid var(--n);padding-top:10px;font-weight:800;font-size:1.2rem}
+.option{display:block;border:1px solid var(--line);padding:9px;border-radius:8px;margin:7px 0;cursor:pointer}.result{font-weight:800;margin-top:12px}.small{font-size:.9rem;color:#637589}footer{text-align:center;padding:25px;color:#647589}
+@media(max-width:560px){.slide{padding:18px}.cell{padding:12px 2px}}
+</style></head><body>
+<header><div class="wrap"><div>ALGORITMOS Y FUNDAMENTOS DE PROGRAMACIÓN</div><h1>Matrices y arreglos bidimensionales</h1><p>Clase interactiva con fundamentación conceptual en Luis Joyanes Aguilar y autores de estructuras de datos. Aplicación práctica: sistema de facturación mediante PSeInt.</p><p><b>Ingeniería de Sistemas · Primer semestre · Duración sugerida: 2 horas</b></p></div></header>
+<nav><div class="wrap"><a href="#objetivos">Objetivos</a><a href="#fundamento">Fundamento</a><a href="#estructura">Estructura</a><a href="#animacion">Animación</a><a href="#pseint">PSeInt</a><a href="#factura">Caso</a><a href="#taller">Taller</a><a href="#fuentes">Bibliografía</a></div></nav>
+<main>
+<section class="slide" id="objetivos"><div class="tag">01 · Aprendizajes</div><h2>¿Qué aprenderás?</h2><div class="grid"><div class="card"><b>Comprender</b><p>Explicar arreglo, homogeneidad, orden e índices.</p></div><div class="card"><b>Representar</b><p>Diferenciar arreglos unidimensionales y bidimensionales.</p></div><div class="card"><b>Programar</b><p>Declarar, cargar, consultar y recorrer matrices con ciclos anidados.</p></div><div class="card"><b>Resolver</b><p>Procesar compras, subtotales, facturas y acumulados.</p></div></div><div class="note">Ruta: concepto → representación tabular → índices → recorrido → algoritmo → validación.</div></section>
+<section class="slide" id="fundamento"><div class="tag">02 · Fundamentación conceptual</div><h2>¿Qué es un arreglo?</h2><p>En el tratamiento clásico de estructuras de datos, <b>Luis Joyanes Aguilar</b> presenta los arrays o arreglos como conjuntos finitos y ordenados de elementos homogéneos. Sus componentes pertenecen a un mismo tipo de dato y se localizan mediante una posición o índice.</p><p>Un arreglo permite agrupar datos relacionados bajo un identificador, en lugar de manejar una variable independiente para cada elemento.</p><div class="grid"><div class="card"><b>Finito</b><p>Tiene una cantidad determinada de elementos.</p></div><div class="card"><b>Ordenado</b><p>Sus elementos ocupan posiciones identificables por índices.</p></div><div class="card"><b>Homogéneo</b><p>Sus elementos comparten tipo de dato: enteros, reales, etc.</p></div></div><div class="note">Precisión: “arreglo bidimensional” describe una estructura organizada en filas y columnas. “Matriz” es también una denominación didáctica habitual. Aquí se estudia almacenamiento y acceso a datos, no operaciones de álgebra matricial.</div><p class="small">Referencia central: Joyanes Aguilar, <i>Fundamentos de programación: algoritmos, estructura de datos y objetos</i>, 5.ª edición (2020), sección sobre arrays y estructuras de datos.</p></section>
+<section class="slide" id="estructura"><div class="tag">03 · Clasificación</div><h2>Una dimensión y dos dimensiones</h2><div class="grid"><div class="card"><h3>Arreglo unidimensional</h3><p>Secuencia de elementos; se accede con un índice.</p><pre>Dimension Precios[4]
+Precios[1]
+Precios[2]</pre><p class="small">Ejemplo: precios unitarios.</p></div><div class="card"><h3>Arreglo bidimensional</h3><p>Elementos en filas y columnas; se accede con dos índices.</p><pre>Dimension Compras[3,4]
+Compras[1,1]
+Compras[2,3]</pre><p class="small">Ejemplo: cantidades por cliente y producto.</p></div></div><table><tr><th>Cliente / Producto</th><th>1 · Teclado</th><th>2 · Mouse</th><th>3 · Monitor</th><th>4 · USB</th></tr><tr><th>Cliente 1</th><td>1</td><td>2</td><td>0</td><td>1</td></tr><tr><th>Cliente 2</th><td>0</td><td>1</td><td>1</td><td>2</td></tr><tr><th>Cliente 3</th><td>2</td><td>1</td><td>0</td><td>3</td></tr></table><div class="note">Compras[3,4] representa 3 filas y 4 columnas: 12 posiciones. Las filas identifican clientes y las columnas productos.</div></section>
+<section class="slide" id="animacion"><div class="tag">04 · Laboratorio visual</div><h2>Animación del recorrido de la matriz</h2><p><code>i</code> identifica la fila o cliente; <code>j</code> identifica la columna o producto. Pulsa los controles y observa el orden de acceso.</p><div class="matrix" id="matrix"><div class="cell">1</div><div class="cell">2</div><div class="cell">0</div><div class="cell">1</div><div class="cell">0</div><div class="cell">1</div><div class="cell">1</div><div class="cell">2</div><div class="cell">2</div><div class="cell">1</div><div class="cell">0</div><div class="cell">3</div></div><div class="note" style="text-align:center"><div class="small">Posición visitada</div><b id="indexes" style="font-size:1.5rem">i = 1 · j = 1</b><div id="desc">Cliente 1 · Teclado · 1 unidad</div></div><div class="progress"><span id="bar"></span></div><div class="controls"><button class="alt" id="back">Anterior</button><button id="forward">Siguiente posición</button><button class="green" id="auto">▶ Recorrer automáticamente</button><button class="alt" id="restart">Reiniciar</button></div><p class="small">Se visitan las cuatro columnas de la fila 1; luego fila 2 y fila 3.</p></section>
+<section class="slide"><div class="tag">05 · Índices</div><h2>¿Qué dato representa cada posición?</h2><table><tr><th>Expresión</th><th>Interpretación</th></tr><tr><td><code>Compras[1,1]</code></td><td>Cliente 1 compró 1 teclado.</td></tr><tr><td><code>Compras[1,2]</code></td><td>Cliente 1 compró 2 mouse.</td></tr><tr><td><code>Compras[2,3]</code></td><td>Cliente 2 compró 1 monitor.</td></tr><tr><td><code>Compras[3,4]</code></td><td>Cliente 3 compró 3 memorias USB.</td></tr></table><div class="note warn"><b>Comprueba:</b> Compras[2,4] significa que el cliente 2 adquirió 2 memorias USB. Los ejemplos asumen índices desde 1; verifica el perfil de PSeInt.</div></section>
+<section class="slide" id="pseint"><div class="tag">06 · Implementación</div><h2>Declarar, cargar y recorrer en PSeInt</h2><h3>Declaración</h3><pre>Definir Compras Como Entero
+Dimension Compras[3,4]</pre><h3>Lectura de datos</h3><pre>Para i <- 1 Hasta 3 Hacer
+    Escribir "Cliente ", i
+    Para j <- 1 Hasta 4 Hacer
+        Escribir "Cantidad del producto ", j
+        Leer Compras[i,j]
+    FinPara
+FinPara</pre><h3>Mostrar el contenido</h3><pre>Para i <- 1 Hasta 3 Hacer
+    Para j <- 1 Hasta 4 Hacer
+        Escribir Sin Saltar Compras[i,j], "  "
+    FinPara
+    Escribir ""
+FinPara</pre><div class="note">El ciclo externo controla filas y el interno columnas. El recorrido completo visita 3 × 4 = 12 elementos. Para una matriz de m filas y n columnas, se visitan m × n elementos.</div></section>
+<section class="slide" id="factura"><div class="tag">07 · Caso aplicado</div><h2>Sistema de facturación</h2><p>La matriz almacena cantidades y un vector almacena precios unitarios. Se relacionan mediante el índice del producto.</p><table><tr><th>Producto</th><th>Precio</th></tr><tr><td>Teclado</td><td>$45.000</td></tr><tr><td>Mouse</td><td>$30.000</td></tr><tr><td>Monitor</td><td>$650.000</td></tr><tr><td>Memoria USB</td><td>$25.000</td></tr></table><div class="note" style="text-align:center"><b>Subtotal = cantidad comprada × precio unitario</b></div><div class="invoice"><h3 style="text-align:center">FACTURA · CLIENTE 1</h3><table><tr><th>Producto</th><th>Cantidad</th><th>Subtotal</th></tr><tr><td>Teclado</td><td>1</td><td>$45.000</td></tr><tr><td>Mouse</td><td>2</td><td>$60.000</td></tr><tr><td>Monitor</td><td>0</td><td>$0</td></tr><tr><td>USB</td><td>1</td><td>$25.000</td></tr></table><div class="total"><span>Total cliente 1</span><span>$130.000</span></div></div><pre>TotalCliente <- 0
+Para j <- 1 Hasta 4 Hacer
+    Subtotal <- Compras[1,j] * Precios[j]
+    TotalCliente <- TotalCliente + Subtotal
+FinPara
+Escribir "Total factura: ", TotalCliente</pre><p>El acumulador del cliente se inicializa en cero para cada factura. El total general se inicializa una sola vez antes de procesar todos los clientes.</p></section>
+<section class="slide"><div class="tag">08 · Programa integrador</div><h2>Algoritmo completo en PSeInt</h2><pre>Algoritmo FacturacionTienda
+    Definir Compras Como Entero
+    Definir Precios Como Real
+    Definir i, j Como Entero
+    Definir Subtotal, TotalCliente Como Real
+    Definir TotalGeneral Como Real
+
+    Dimension Compras[3,4]
+    Dimension Precios[4]
+
+    Precios[1] <- 45000
+    Precios[2] <- 30000
+    Precios[3] <- 650000
+    Precios[4] <- 25000
+
+    Para i <- 1 Hasta 3 Hacer
+        Escribir "CLIENTE ", i
+        Para j <- 1 Hasta 4 Hacer
+            Escribir "Cantidad del producto ", j
+            Leer Compras[i,j]
+        FinPara
+    FinPara
+
+    TotalGeneral <- 0
+    Para i <- 1 Hasta 3 Hacer
+        TotalCliente <- 0
+        Escribir "FACTURA DEL CLIENTE ", i
+        Para j <- 1 Hasta 4 Hacer
+            Subtotal <- Compras[i,j] * Precios[j]
+            TotalCliente <- TotalCliente + Subtotal
+            Escribir "Producto ", j, ": ", Subtotal
+        FinPara
+        Escribir "Total cliente: ", TotalCliente
+        TotalGeneral <- TotalGeneral + TotalCliente
+    FinPara
+    Escribir "TOTAL GENERAL: ", TotalGeneral
+FinAlgoritmo</pre><div class="note warn"><b>Verificación:</b> cliente 1 = $130.000; cliente 2 = $730.000; cliente 3 = $195.000; total general = <b>$1.055.000</b>.</div></section>
+<section class="slide" id="taller"><div class="tag">09 · Taller</div><h2>Transferencia del aprendizaje</h2><p>Extiende el sistema para cinco clientes y seis productos.</p><ol><li>Define una matriz de 5 × 6.</li><li>Define un vector de seis precios.</li><li>Registra las cantidades compradas por cada cliente.</li><li>Calcula subtotal por producto y total por cliente.</li><li>Calcula el total general de ventas.</li><li>Determina el cliente con la compra de mayor valor.</li><li>Determina el producto que generó mayores ingresos.</li><li>Explica por qué los precios se representan con un vector y las cantidades con una matriz.</li></ol><div class="note">Reto: si agregas dos clientes, ¿qué dimensión cambia? Si agregas un producto, ¿qué dimensión y qué vector cambian?</div></section>
+<section class="slide"><div class="tag">10 · Evaluación</div><h2>Comprueba lo aprendido</h2><div id="quiz"></div><button id="check">Calificar</button><div id="score" class="result"></div></section>
+<section class="slide" id="fuentes"><div class="tag">11 · Bibliografía</div><h2>Referencias académicas</h2><p>Joyanes Aguilar es el referente principal para arreglos y estructuras de datos. Aho, Hopcroft y Ullman y Mark Allen Weiss complementan el marco de estructuras y análisis algorítmico. Los ejemplos de facturación y la sintaxis PSeInt son elaboraciones didácticas de esta clase, no citas textuales de los autores.</p><ol><li><b>Joyanes Aguilar, L.</b> (2020). <i>Fundamentos de programación: algoritmos, estructura de datos y objetos</i> (5.ª ed.). McGraw-Hill. Sección de arrays, arreglos y estructuras de datos. <a href="https://books.google.com/books?id=wkXyzQEACAAJ" target="_blank" rel="noopener">Ficha bibliográfica</a>.</li><li><b>Aho, A. V., Hopcroft, J. E., y Ullman, J. D.</b> (1998). <i>Estructuras de datos y algoritmos</i>. Addison-Wesley Iberoamericana. <a href="https://bibliotecas.upse.edu.ec/cgi-bin/koha/opac-detail.pl?biblionumber=16496" target="_blank" rel="noopener">Registro bibliográfico universitario</a>.</li><li><b>Weiss, M. A.</b> (1995). <i>Estructuras de datos y algoritmos</i>. Addison-Wesley Iberoamericana. Referente complementario; verificar edición disponible en biblioteca.</li><li><b>Joyanes Aguilar, L.</b> (2008). <i>Fundamentos de programación: algoritmos, estructura de datos y objetos</i> (4.ª ed.). McGraw-Hill. <a href="https://bibliotecas.upse.edu.ec/cgi-bin/koha/opac-detail.pl?biblionumber=18220" target="_blank" rel="noopener">Registro bibliográfico</a>.</li></ol><div class="note">Criterio de rigor: las fuentes sustentan los conceptos de arreglos, estructuras de datos y algoritmos. No se atribuyen a los autores instrucciones propias de PSeInt ni ejemplos específicos de facturación.</div></section>
+</main><footer>Clase interactiva · Algoritmos y Fundamentos de Programación · Matrices en PSeInt</footer>
+<script>
+const vals=[1,2,0,1,0,1,1,2,2,1,0,3],names=["Teclado","Mouse","Monitor","Memoria USB"];let pos=0,timer=null;const cells=[...document.querySelectorAll("#matrix .cell")];
+function draw(){cells.forEach((c,k)=>c.className="cell"+(k===pos?" active":k<pos?" done":""));let i=Math.floor(pos/4)+1,j=pos%4+1;document.getElementById("indexes").textContent=`i = ${i} · j = ${j}`;document.getElementById("desc").textContent=`Cliente ${i} · ${names[j-1]} · ${vals[pos]} unidad(es)`;document.getElementById("bar").style.width=((pos+1)/12*100)+"%";document.getElementById("back").disabled=pos===0;document.getElementById("forward").disabled=pos===11}
+function stop(){if(timer){clearInterval(timer);timer=null}document.getElementById("auto").textContent="▶ Recorrer automáticamente"}
+document.getElementById("forward").onclick=()=>{stop();if(pos<11)pos++;draw()};document.getElementById("back").onclick=()=>{stop();if(pos>0)pos--;draw()};document.getElementById("restart").onclick=()=>{stop();pos=0;draw()};document.getElementById("auto").onclick=()=>{if(timer){stop();return}document.getElementById("auto").textContent="Ⅱ Pausar";timer=setInterval(()=>{if(pos===11){stop();return}pos++;draw()},850)};draw();
+const questions=[["¿Qué significa que un arreglo sea homogéneo?",["Sus elementos son del mismo tipo de dato","Tiene filas y columnas","Cambia de tamaño automáticamente"],0],["¿Cuántos índices requiere una posición bidimensional?",["Uno","Dos","Tres"],1],["¿Cuántas posiciones tiene Compras[3,4]?",["7","12","34"],1],["¿Qué representa Compras[2,3]?",["Fila 2, columna 3","Fila 3, columna 2","Solo la fila 2"],0],["¿Para qué sirven los ciclos anidados?",["Recorrer filas y columnas","Convertir enteros en reales","Dimensionar un vector"],0],["¿Cuál es el total correcto del cliente 3?",["$145.000","$195.000","$205.000"],1]];
+const quiz=document.getElementById("quiz");questions.forEach((q,i)=>{let box=document.createElement("div");box.className="card";box.style.margin="12px 0";let title=document.createElement("b");title.textContent=(i+1)+". "+q[0];box.appendChild(title);q[1].forEach((v,j)=>{let label=document.createElement("label");label.className="option";label.innerHTML=`<input type="radio" name="q${i}" value="${j}"> ${v}`;box.appendChild(label)});quiz.appendChild(box)});
+document.getElementById("check").onclick=()=>{let score=0,count=0;questions.forEach((q,i)=>{let a=document.querySelector(`input[name="q${i}"]:checked`);if(a){count++;if(+a.value===q[2])score++}});let out=document.getElementById("score");if(count<questions.length){out.textContent=`Has respondido ${count} de ${questions.length}. Completa todas las preguntas.`;out.style.color="#9a6700"}else{out.textContent=`Resultado: ${score} de ${questions.length} respuestas correctas.`;out.style.color=score>=5?"#21845d":"#a45a00"}};
+</script></body></html>
